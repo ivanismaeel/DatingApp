@@ -1,0 +1,42 @@
+<form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
+  <h2 class="text-center text-primary">Sign up</h2>
+  <hr />
+
+  <div class="mb-3">
+    <label class="me-1">I am a:</label>
+    <label class="form-check-label me-1">
+      <input type="radio" class="form-check-input" value="male" formControlName="gender">
+      Male
+    </label>
+
+    <label class="form-check-label">
+      <input type="radio" class="form-check-input" value="female" formControlName="gender">
+      Female
+    </label>
+  </div>
+
+  <app-text-input [formControl]="$any(registerForm.controls['username'])" [label]="'Username'" />
+  <app-text-input [formControl]="$any(registerForm.controls['knownAs'])" [label]="'known as'" />
+  <app-date-picker [formControl]="$any(registerForm.controls['dateOfBirth'])" [label]="'Date of birth'"
+    [maxDate]="maxDate" />
+  <app-text-input [formControl]="$any(registerForm.controls['city'])" [label]="'City'" />
+  <app-text-input [formControl]="$any(registerForm.controls['country'])" [label]="'Country'" />
+  <app-text-input [formControl]="$any(registerForm.controls['password'])" [label]="'Password'" [type]="'password'" />
+  <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])" [label]="'Confirm password'"
+    [type]="'password'" />
+
+  @if (validationErrors() && validationErrors()?.length) {
+  <div class="alert alert-danger text-start">
+    @for (err of validationErrors(); track $index) {
+    <p>{{ err }}</p>
+    }
+  </div>
+  }
+
+  <div class="form-group text-center">
+    <button [disabled]="registerForm.invalid" class="btn btn-success me-2" type="submit">Register</button>
+    <button class="btn btn-default me-2" (click)="cancel()" type="button">
+      Cancel
+    </button>
+  </div>
+</form>
